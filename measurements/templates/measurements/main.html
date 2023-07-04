@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+calculate distance
+{% endblock title %}
+
+{% block content %}
+
+<!-- Modal -->
+<body style="color:#050505;font-family:Arial; font-size:120%;margin:20;">
+<div class="header">
+    <h2>Geolocator</h2>
+</div>
+<!--<h4 style="rgba:(0,0,255,0.3);color:#79d2a6; font-family:Arial; font-size:300%;text-align:center;">GEO LOCATOR</h4>-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Distance to {{ destination }} is:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          {{ distance }} km
+      </div>
+    </div>
+  </div>
+</div>
+<div class="b">
+{{ map|safe }}
+</div>
+
+<form action="" method="POST" autocomplete="off">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-primary">confirm</button>
+</form>
+<br>
+
+
+{% if request.POST and distance is not None %}
+    <script>
+        $(window).on('load', function(){
+            $('#exampleModal').modal('show')
+        })
+    </script>
+{% endif %}
+
+
+{% endblock content %}
